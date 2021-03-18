@@ -1,2 +1,2 @@
 build:
-	g++ -g -Wall main.cpp -o executable.exe
+	g++ -g -Wall main.cpp datapoint.cpp -o executable.exe
