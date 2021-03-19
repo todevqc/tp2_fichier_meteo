@@ -6,22 +6,16 @@
 
 class Datapoint {
     private:
-        std::string timestamp;
-        double latitude;
-        double longitude;
+        std::string date_releve;
+        std::string latitude;
+        std::string longitude;
         double temperature;
     public:
-        Datapoint(std::string timestamp, double latitude, double longitude, double temperature);
-        
+        Datapoint(std::string date_releve, std::string latitude, std::string longitude, double temperature);
+        //  Méthode d’affichage des informations de Datapoint dans le bon format
         std::string ecrireDatapoint() const;
-
-        bool operator<(const Datapoint& datapoint_suivant) const {
-            if (this->latitude > datapoint_suivant.latitude) return true;
-            else if ((this->latitude == datapoint_suivant.latitude) && (this->longitude < datapoint_suivant.longitude)){
-                return true;
-            }
-            return false;
-        }
+        //  Redéfinition de l’opérateur inferieur, pour répondre au besoins de notre logiciel
+        bool operator<(const Datapoint& datapoint_suivant) const ;
 };
 
 #endif // __DATAPOINT_H__
