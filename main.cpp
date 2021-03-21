@@ -1,14 +1,14 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <set>
+#include <queue>
 
 #include "datapoint.h"
 
 int main() {
-  //  declaration d'un conteneur de type Arbre
-  //  il est aussi possible d'utiliser un conteneur de type priority_queue
-  std::set<Datapoint> dataCanada;
+  //  declaration d'un conteneur de type priority_queue
+  //  il est aussi possible d'utiliser un conteneur de type Arbre
+  std::priority_queue<Datapoint> dataCanada;
 
   //  Lecture et récupération des données du fichier rawdata.txt
   std::ifstream fichierUS("rawdata.txt");
@@ -27,7 +27,10 @@ int main() {
       //  Création d’objet Datapoint, à partir des données de la lecture
       Datapoint dataStation(date_releve, latitude, longitude, (temperature-32)*5/9.0);
       //  Ajout de l’objet Datapoint dans le conteneur
-      dataCanada.insert(dataStation);
+      //  avec test de fin de fichier pour pas avoir un doublon au dernier enregistrement
+      if(!fichierUS.eof()){
+        dataCanada.push(dataStation);
+      }
     }  
     fichierUS.close();
   }
@@ -38,8 +41,9 @@ int main() {
   if (!mateoCanada.is_open()){
     std::cout << "Impossible d'ouvrir le fichier !" << std::endl;
   }else{
-    for (std::set<Datapoint>::iterator it = dataCanada.begin(); it != dataCanada.end(); ++it) {
-      mateoCanada << it->ecrireDatapoint() << std::endl;
+    while(dataCanada.size() > 0){
+      mateoCanada << dataCanada.top().ecrireDatapoint() << std::endl;
+      dataCanada.pop();
     }
     mateoCanada.close();
   }

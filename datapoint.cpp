@@ -21,8 +21,8 @@ std::string Datapoint::ecrireDatapoint() const{
 
 //  Redéfinition de l’opérateur inferieur, pour répondre au besoins de notre logiciel
 bool Datapoint::operator<(const Datapoint& datapoint_suivant) const {
-    if (this->latitude > datapoint_suivant.latitude) return true;
-    else if ((this->latitude == datapoint_suivant.latitude) && (this->longitude < datapoint_suivant.longitude)){
+    if (this->latitude < datapoint_suivant.latitude) return true;
+    else if ((this->latitude == datapoint_suivant.latitude) && (this->longitude > datapoint_suivant.longitude)){
         return true;
     }
     return false;
