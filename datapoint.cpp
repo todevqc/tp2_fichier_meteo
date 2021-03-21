@@ -1,7 +1,7 @@
 #include "datapoint.h"
 
 //  Constructeur Datapoint
-Datapoint::Datapoint(std::string date_releve, std::string latitude, std::string longitude, double temperature){
+Datapoint::Datapoint(std::string date_releve, double latitude, double longitude, double temperature){
     this->date_releve = date_releve;
     this->latitude = latitude;
     this->longitude = longitude;
@@ -10,11 +10,12 @@ Datapoint::Datapoint(std::string date_releve, std::string latitude, std::string 
 
 //  Méthode d’affichage des informations de Datapoint dans le bon format
 std::string Datapoint::ecrireDatapoint() const{
-    std::string affichage = "";
-    affichage = this->date_releve 
-    + "  " + this->latitude 
-    + "  " + this->longitude
-    + "  " + std::to_string(this->temperature);
+    // créer un flux de sortie
+    std::ostringstream oss;
+    // écrire dans le flux pour garder le bon format des Double
+    oss << this->date_releve << "  " << this->latitude << "  " << this->longitude << "  " << this->temperature;
+    // récupérer une chaîne de caractères
+    std::string affichage = oss.str();
     return affichage;
 }
 

@@ -25,7 +25,7 @@ int main() {
       fichierUS >> latitude >> longitude >> stationInutile >> temperature >> date_releve;
       //  T°C = (T°F − 32) × 5 ÷ 9.
       //  Création d’objet Datapoint, à partir des données de la lecture
-      Datapoint dataStation(date_releve, std::to_string(latitude), std::to_string(longitude), (temperature-32)*5/9.0);
+      Datapoint dataStation(date_releve, latitude, longitude, (temperature-32)*5/9.0);
       //  Ajout de l’objet Datapoint dans le conteneur
       dataCanada.insert(dataStation);
     }  
