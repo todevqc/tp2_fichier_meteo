@@ -7,12 +7,12 @@
 
 class Datapoint {
     private:
-        std::string date_releve;
+        std::string timestamp;
         double latitude;
         double longitude;
         double temperature;
     public:
-        Datapoint(std::string date_releve, double latitude, double longitude, double temperature);
+        Datapoint(std::string timestamp, double latitude, double longitude, double temperature);
         //  Méthode d’affichage des informations de Datapoint dans le bon format
         std::string ecrireDatapoint() const;
         //  Redéfinition de l’opérateur inferieur, pour répondre au besoins de notre logiciel

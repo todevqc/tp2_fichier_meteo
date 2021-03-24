@@ -1,14 +1,15 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <queue>
+#include <set>
 
 #include "datapoint.h"
 
 int main() {
-  //  declaration d'un conteneur de type priority_queue
-  //  il est aussi possible d'utiliser un conteneur de type Arbre
-  std::priority_queue<Datapoint> dataCanada;
+  //  declaration d'un conteneur de type set (Arbre binaire de recherche)
+  //  vu qu'il est demandé de les garder en ordre dans le conteneur
+  //  sinon il aurais étais aussi possible d'utiliser un conteneur de type priority_queue
+  std::set<Datapoint> dataCanada;
 
   //  Lecture et récupération des données du fichier rawdata.txt
   std::ifstream fichierUS("rawdata.txt");
@@ -18,20 +19,17 @@ int main() {
     double latitude;
     double longitude;
     double temperature;
-    std::string date_releve;  
+    std::string timestamp;  
     //  Récupère l’information de la station, mais n’est pas ajouté a mon objet Datapoint
     std::string stationInutile;
     while(!fichierUS.eof()){
-      fichierUS >> latitude >> longitude >> stationInutile >> temperature >> date_releve;
+      fichierUS >> latitude >> longitude >> stationInutile >> temperature >> timestamp;
       //  T°C = (T°F − 32) × 5 ÷ 9.
       //  Création d’objet Datapoint, à partir des données de la lecture
-      Datapoint dataStation(date_releve, latitude, longitude, (temperature-32)*5/9.0);
+      Datapoint dataStation(timestamp, latitude, longitude, (temperature-32)*5/9.0);
       //  Ajout de l’objet Datapoint dans le conteneur
-      //  avec test de fin de fichier pour pas avoir un doublon au dernier enregistrement
-      if(!fichierUS.eof()){
-        dataCanada.push(dataStation);
-      }
-    }  
+      dataCanada.insert(dataStation);
+    } 
     fichierUS.close();
   }
 
@@ -41,9 +39,8 @@ int main() {
   if (!mateoCanada.is_open()){
     std::cout << "Impossible d'ouvrir le fichier !" << std::endl;
   }else{
-    while(dataCanada.size() > 0){
-      mateoCanada << dataCanada.top().ecrireDatapoint() << std::endl;
-      dataCanada.pop();
+    for (std::set<Datapoint>::iterator iter = dataCanada.begin() ; iter!=dataCanada.end() ; iter++){
+      mateoCanada << iter->ecrireDatapoint() << std::endl;
     }
     mateoCanada.close();
   }
